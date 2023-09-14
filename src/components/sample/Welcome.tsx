@@ -50,7 +50,7 @@ async function onGetAuthToken() {
 
 function onLinkToSecondTab() {
   pages.navigateToApp({
-    appId: "677ec375-95f6-41a0-b41c-72d7d0a97a9e",
+    appId: "3037e1e0-5b60-4350-bc2c-09ff2e4a17c7",
     pageId: "index1",
   });
 }
