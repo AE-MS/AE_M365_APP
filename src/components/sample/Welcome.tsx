@@ -234,7 +234,7 @@ export function Welcome(props: { showFunction?: boolean; environment?: string })
         <button onClick={readFromLocalStorage}>Read from Local Storage</button>
         <button onClick={selectPeople}>Select People</button>
         <button onClick={navigateToSecondPage}>Navigate to second page</button>
-        <button onClick={() => window.location.href = "https://m365playgrcb3596tab.z5.web.core.windows.net/index.html#/tab"}>Navigate to Cloud Deploy</button>
+        <button onClick={() => window.location.href = "https://m365tab962ca2.z5.web.core.windows.net/index.html#/tab"}>Navigate to Cloud Deploy</button>
         <button onClick={() => window.location.href = "https://example2.com:53000/"}>Navigate to Example 2</button>
         <button onClick={startAuthenticate}>Authenticate</button>
         <button onClick={() => window.open("https://www.bing.com/")}>Open Bing in new window</button>

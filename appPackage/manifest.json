@@ -42,7 +42,9 @@
         "messageTeamMembers"
     ],
     "validDomains": [
-        "${{TAB_DOMAIN}}"
+        "${{TAB_DOMAIN}}",
+        "localhost:53000",
+        "m365tab962ca2.z5.web.core.windows.net"        
     ],
     "webApplicationInfo": {
         "id": "${{AAD_APP_CLIENT_ID}}",
