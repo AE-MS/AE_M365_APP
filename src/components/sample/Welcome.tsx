@@ -50,7 +50,7 @@ async function onGetAuthToken() {
 
 function onLinkToSecondTab() {
   pages.navigateToApp({
-    appId: "3037e1e0-5b60-4350-bc2c-09ff2e4a17c7",
+    appId: window.location.hostname === "localhost" ? "3037e1e0-5b60-4350-bc2c-09ff2e4a17c7" : "1abc4bc4-c7c4-4f84-8ece-fc4a97d48149",
     pageId: "index1",
   });
 }
