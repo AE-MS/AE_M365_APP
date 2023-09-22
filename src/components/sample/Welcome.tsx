@@ -189,6 +189,7 @@ export function Welcome(props: { showFunction?: boolean; environment?: string })
   const frameContext: FrameContexts | undefined = initResult?.context?.page.frameContext;
   const appFrameContext = initResult?.appFrameContext;
   const locationSupported: boolean | undefined = initResult?.context === undefined ? undefined : location.isSupported();
+  const pagesTabsSupported: boolean | undefined = initResult?.context === undefined ? undefined : pages.tabs.isSupported();
   const geoLocationSupported: boolean | undefined = initResult?.context === undefined ? undefined : geoLocation.isSupported();
   const peopleSupported: boolean | undefined = initResult?.context === undefined ? undefined : people.isSupported();
 
@@ -205,6 +206,7 @@ export function Welcome(props: { showFunction?: boolean; environment?: string })
         <p className="center"><div id="legacyContextHostType">Legacy context host type: Not Retrieved Yet</div></p>
         <p className="center"><div id="currentContextHostType">Current context host type: {initResult?.context?.app.host.clientType}</div></p>
         <p className="center">Location is supported: {locationSupported ? "true" : "false"}</p>
+        <p className="center">Pages.tabs is supported: {pagesTabsSupported ? "true" : "false"}</p>
         <p className="center">Geolocation is supported: {geoLocationSupported ? "true" : "false"}</p>
         <p className="center">People is supported: {peopleSupported ? "true" : "false"}</p>
         {pageId && (
