@@ -122,7 +122,64 @@ const adaptiveCardJson = {
   "version": "1.0"
 };
 
-function openCardDialog() {
+const card2 = {
+  type: "AdaptiveCard",
+  body: [
+   {
+    type: "TextBlock",
+    size: "Medium",
+    weight: "Bolder",
+    text: "Select user(s) in your organization."
+   },
+   {
+    label: "1) Select user(s): ",
+    isRequired: true,
+    placeholder: "Search and select user(s)",
+    type: "Input.ChoiceSet",
+    choices: [],
+    "choices.data": {
+      type: "Data.Query",
+      dataset: "graph.microsoft.com/users"
+    },
+    id: "selection",
+    isMultiSelect: true,
+    errorMessage: "Atleast one user must be selected."
+   },
+   {
+    isRequired: true,
+    label: "2) Message",
+    type: "Input.Text",
+    size:"Medium",
+    placeholder: "Enter your message",
+    id: 'message',
+    errorMessage: "A message is required."
+   },
+   {
+    type: "Input.Toggle",
+    label: "3) Summary",
+    title: "Include Summary?",
+    valueOn: "1",
+    valueOff: "2",
+    value: "1",
+    id: "sum_type"
+   }
+  ],
+  actions: [
+    {
+      type: "Action.Submit",
+      title: "Cancel",
+      associatedInputs: "none"
+    },
+   {
+    type: "Action.Submit",
+    title: "Send"
+   },
+  ],
+  $schema: "http://adaptivecards.io/schemas/adaptive-card.json",
+  version: "1.4"
+ };
+
+function openCardDialogAsTask() {
   clearSubmissionAcknowledgement();
   tasks.startTask({
     card: JSON.stringify(adaptiveCardJson),    
@@ -132,6 +189,24 @@ function openCardDialog() {
     dialogResultElement.innerText = `Card Dialog submission occurred, result = ${result} err = ${err}`;
   }
   )
+}
+
+function openCardDialogAsDialog() {
+  clearSubmissionAcknowledgement();
+  const dialogResultElement = document.getElementById("submissionAcknowledgement")!;
+
+  try {
+    dialog.adaptiveCard.open({
+      card: JSON.stringify(adaptiveCardJson),
+      size: { height: 600, width: 600 },
+    },
+    (result: dialog.ISdkResponse) => {
+      dialogResultElement.innerText = `Card Dialog submission occurred, result = ${result.result} err = ${result.err}`;
+    }
+    );
+  } catch (err) {
+    dialogResultElement.innerText = `Exception thrown when opening card dialog as dialog, err = ${JSON.stringify(err)}`;
+  }
 }
 
 function submitUrlDialog() {
@@ -188,6 +263,7 @@ export function Welcome(props: { showFunction?: boolean; environment?: string })
   const pageId: string | undefined = initResult?.context?.page.id;
   const frameContext: FrameContexts | undefined = initResult?.context?.page.frameContext;
   const appFrameContext = initResult?.appFrameContext;
+  const cardDialogsIsSupported: boolean | undefined = initResult?.context === undefined ? undefined : dialog.adaptiveCard.isSupported();
   const locationSupported: boolean | undefined = initResult?.context === undefined ? undefined : location.isSupported();
   const pagesTabsSupported: boolean | undefined = initResult?.context === undefined ? undefined : pages.tabs.isSupported();
   const geoLocationSupported: boolean | undefined = initResult?.context === undefined ? undefined : geoLocation.isSupported();
@@ -205,6 +281,7 @@ export function Welcome(props: { showFunction?: boolean; environment?: string })
         <p className="center">TeamsJS version: {version}</p>
         <p className="center"><div id="legacyContextHostType">Legacy context host type: Not Retrieved Yet</div></p>
         <p className="center"><div id="currentContextHostType">Current context host type: {initResult?.context?.app.host.clientType}</div></p>
+        <p className="center">Card Dialogs is supported: {cardDialogsIsSupported ? "true" : "false"}</p>
         <p className="center">Location is supported: {locationSupported ? "true" : "false"}</p>
         <p className="center">Pages.tabs is supported: {pagesTabsSupported ? "true" : "false"}</p>
         <p className="center">Geolocation is supported: {geoLocationSupported ? "true" : "false"}</p>
@@ -219,7 +296,8 @@ export function Welcome(props: { showFunction?: boolean; environment?: string })
         { frameContext === FrameContexts.content && (
           <div>
             <button onClick={openUrlDialog}>Open URL Dialog</button>
-            <button onClick={openCardDialog}>Open Card Dialog</button>
+            <button onClick={openCardDialogAsTask}>Open Card Dialog (as task)</button>
+            <button onClick={openCardDialogAsDialog}>Open Card Dialog (as dialog)</button>
           </div>
         )}
         { frameContext === FrameContexts.task && (
