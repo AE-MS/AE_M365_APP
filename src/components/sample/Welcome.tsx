@@ -9,7 +9,7 @@ import {
 } from "@fluentui/react-components";
 import "./Welcome.css";
 import { EditCode } from "./EditCode";
-import { app, authentication, Context, dialog, FrameContexts, HostClientType, geoLocation, getContext, location, pages, SdkError, tasks, people, version } from "@microsoft/teams-js";
+import { app, authentication, chat, Context, dialog, FrameContexts, HostClientType, geoLocation, getContext, location, pages, SdkError, tasks, people, version } from "@microsoft/teams-js";
 import { AzureFunctions } from "./AzureFunctions";
 import { Graph } from "./Graph";
 import { CurrentUser } from "./CurrentUser";
@@ -91,6 +91,15 @@ function selectPeople() {
     console.log(`People picker Error: ${error.errorCode}, message: ${error.message}`);
   });
 }
+
+function startSingleUserChat() {
+  chat.openChat({user: "trharris@microsoft.com"});
+}
+
+function startGroupChat() {
+  chat.openGroupChat({ users: ["trharris@microsoft.com", "erinha@microsoft.com"]});
+}
+
 
 function startAuthenticate() {
   authentication.authenticate({ 
@@ -313,6 +322,8 @@ export function Welcome(props: { showFunction?: boolean; environment?: string })
         <button onClick={writeToLocalStorage}>Write to Local Storage</button>
         <button onClick={readFromLocalStorage}>Read from Local Storage</button>
         <button onClick={selectPeople}>Select People</button>
+        <button onClick={startSingleUserChat}>Start Single User Chat</button>
+        <button onClick={startGroupChat}>Start Group User Chat</button>
         <button onClick={navigateToSecondPage}>Navigate to second page</button>
         <button onClick={() => window.location.href = "https://m365tab962ca2.z5.web.core.windows.net/index.html#/tab"}>Navigate to Cloud Deploy</button>
         <button onClick={() => window.location.href = "https://example2.com:53000/"}>Navigate to Example 2</button>
