@@ -188,6 +188,18 @@ const card2 = {
   version: "1.4"
  };
 
+function openCardAsObjectDialogAsTask() {
+  clearSubmissionAcknowledgement();
+  tasks.startTask({
+    card: adaptiveCardJson as any as string,
+  },
+  (err: string, result: string | object) => {
+    const dialogResultElement = document.getElementById("submissionAcknowledgement")!;
+    dialogResultElement.innerText = `Card Dialog submission occurred, result = ${result} err = ${err}`;
+  }
+  )
+}
+
 function openCardDialogAsTask() {
   clearSubmissionAcknowledgement();
   tasks.startTask({
@@ -305,7 +317,8 @@ export function Welcome(props: { showFunction?: boolean; environment?: string })
         { frameContext === FrameContexts.content && (
           <div>
             <button onClick={openUrlDialog}>Open URL Dialog</button>
-            <button onClick={openCardDialogAsTask}>Open Card Dialog (as task)</button>
+            <button onClick={openCardDialogAsTask}>Open Card (as string) Dialog (as task)</button>
+            <button onClick={openCardAsObjectDialogAsTask}>Open Card (as object) Dialog (as task)</button>
             <button onClick={openCardDialogAsDialog}>Open Card Dialog (as dialog)</button>
           </div>
         )}
