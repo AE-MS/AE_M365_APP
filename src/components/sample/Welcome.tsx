@@ -242,6 +242,32 @@ function navigateToSecondPage() {
   window.location.href = newUrl;
 }
 
+function getWindowParentString() {
+  var parent = window.parent;
+  if (parent !== undefined && parent !== null) {
+      if (parent === window.self) {
+          return `PARENT IS SELF`;
+      } else {
+          return `PARENT IS NOT SELF, parent href = ${parent.location.href}`;
+      }
+  } else {
+      return `PARENT IS UNDEFINED/NULL`;
+  }
+}
+
+function getWindowOpenerString() {
+  try {
+    var opener = window.opener;
+    if (opener !== undefined && opener !== null) {
+        return opener.location.href;
+    } else {
+        return `OPENER IS UNDEFINED/NULL`;
+    }
+  } catch (err) {
+      return `Exception while trying to access opener: ${err}`;
+  }
+}
+
 export function Welcome(props: { showFunction?: boolean; environment?: string }) {
   const { showFunction, environment } = {
     showFunction: true,
@@ -313,6 +339,8 @@ export function Welcome(props: { showFunction?: boolean; environment?: string })
         <p className="center">The context frame context is {frameContext}</p>
         <p className="center">The app frame context is {appFrameContext}</p>
         <p className="center">The current URL is {window.location.href}</p>
+        <p className="center">Window.parent is {getWindowParentString()}</p>
+        <p className="center">Window.opener is {getWindowOpenerString()}</p>
         <p id="submissionAcknowledgement" className="center"></p>
         { frameContext === FrameContexts.content && (
           <div>
