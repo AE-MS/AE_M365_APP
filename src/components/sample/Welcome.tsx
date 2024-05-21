@@ -9,7 +9,7 @@ import {
 } from "@fluentui/react-components";
 import "./Welcome.css";
 import { EditCode } from "./EditCode";
-import { app, authentication, chat, Context, dialog, FrameContexts, HostClientType, geoLocation, getContext, location, pages, SdkError, tasks, people, version } from "@microsoft/teams-js";
+import { app, authentication, chat, Context, dialog, FrameContexts, HostClientType, geoLocation, getContext, location, pages, SdkError, tasks, people, version, webStorage } from "@microsoft/teams-js";
 import { AzureFunctions } from "./AzureFunctions";
 import { Graph } from "./Graph";
 import { CurrentUser } from "./CurrentUser";
@@ -248,7 +248,11 @@ function getWindowParentString() {
       if (parent === window.self) {
           return `PARENT IS SELF`;
       } else {
+        try {
           return `PARENT IS NOT SELF, parent href = ${parent.location.href}`;
+        } catch (e) {
+          return `PARENT IS NOT SELF, parent location is not accessible: ${e}`;
+        }
       }
   } else {
       return `PARENT IS UNDEFINED/NULL`;
@@ -315,6 +319,7 @@ export function Welcome(props: { showFunction?: boolean; environment?: string })
   const pagesTabsSupported: boolean | undefined = initResult?.context === undefined ? undefined : pages.tabs.isSupported();
   const geoLocationSupported: boolean | undefined = initResult?.context === undefined ? undefined : geoLocation.isSupported();
   const peopleSupported: boolean | undefined = initResult?.context === undefined ? undefined : people.isSupported();
+  const isWebStorageClearedOnUserLogOut: boolean | undefined = initResult?.context === undefined ? undefined : webStorage.isWebStorageClearedOnUserLogOut();
 
   return (
     <div className="welcome page">
@@ -333,6 +338,7 @@ export function Welcome(props: { showFunction?: boolean; environment?: string })
         <p className="center">Pages.tabs is supported: {pagesTabsSupported ? "true" : "false"}</p>
         <p className="center">Geolocation is supported: {geoLocationSupported ? "true" : "false"}</p>
         <p className="center">People is supported: {peopleSupported ? "true" : "false"}</p>
+        <p className="center">Is Web Storage Cleared on Logout? {isWebStorageClearedOnUserLogOut ? "true" : "false"}</p>
         {pageId && (
           <p className="center">The page id is {pageId}</p>
         )}
