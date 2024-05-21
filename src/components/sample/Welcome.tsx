@@ -18,6 +18,7 @@ import {
   tasks,
   people,
   version,
+  webStorage,
 } from "@microsoft/teams-js";
 import { AzureFunctions } from "./AzureFunctions";
 import { Graph } from "./Graph";
@@ -341,6 +342,7 @@ export function Welcome(props: { showFunction?: boolean; environment?: string })
   const clientType: HostClientType | undefined = initResult?.context?.app.host.clientType;
   const pageId: string | undefined = initResult?.context?.page.id;
   const frameContext: FrameContexts | undefined = initResult?.context?.page.frameContext;
+  const subPageId: string | undefined = initResult?.context?.page.subPageId;
   const appFrameContext = initResult?.appFrameContext;
   const cardDialogsIsSupported: boolean | undefined =
     initResult?.context === undefined ? undefined : dialog.adaptiveCard.isSupported();
@@ -381,6 +383,8 @@ export function Welcome(props: { showFunction?: boolean; environment?: string })
         )}
         <p className="center">The context frame context is {frameContext}</p>
         <p className="center">The app frame context is {appFrameContext}</p>
+        <p className="center">The page id is "{pageId}"</p>
+        <p className="center">The subPageId is "{subPageId}"</p>
         <p className="center">The current URL is {window.location.href}</p>
         <p className="center">Window.parent is {getWindowParentString()}</p>
         <p className="center">Window.opener is {getWindowOpenerString()}</p>
