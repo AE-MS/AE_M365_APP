@@ -2,9 +2,6 @@ import { useContext, useState } from "react";
 import { Image, TabList, Tab, SelectTabEvent, SelectTabData, TabValue } from "@fluentui/react-components";
 import "./Welcome.css";
 import { EditCode } from "./EditCode";
-<<<<<<< HEAD
-import { app, authentication, chat, Context, dialog, FrameContexts, HostClientType, geoLocation, getContext, location, pages, SdkError, tasks, people, version, webStorage } from "@microsoft/teams-js";
-=======
 import {
   app,
   authentication,
@@ -22,7 +19,6 @@ import {
   people,
   version,
 } from "@microsoft/teams-js";
->>>>>>> 4ae178fa90c66450a3d04175e1a368258f5d7794
 import { AzureFunctions } from "./AzureFunctions";
 import { Graph } from "./Graph";
 import { CurrentUser } from "./CurrentUser";
@@ -379,14 +375,10 @@ export function Welcome(props: { showFunction?: boolean; environment?: string })
         <p className="center">Pages.tabs is supported: {pagesTabsSupported ? "true" : "false"}</p>
         <p className="center">Geolocation is supported: {geoLocationSupported ? "true" : "false"}</p>
         <p className="center">People is supported: {peopleSupported ? "true" : "false"}</p>
-<<<<<<< HEAD
         <p className="center">Is Web Storage Cleared on Logout? {isWebStorageClearedOnUserLogOut ? "true" : "false"}</p>
         {pageId && (
           <p className="center">The page id is {pageId}</p>
         )}
-=======
-        {pageId && <p className="center">The page id is {pageId}</p>}
->>>>>>> 4ae178fa90c66450a3d04175e1a368258f5d7794
         <p className="center">The context frame context is {frameContext}</p>
         <p className="center">The app frame context is {appFrameContext}</p>
         <p className="center">The current URL is {window.location.href}</p>
