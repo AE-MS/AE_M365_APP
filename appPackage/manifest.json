@@ -1,63 +1,53 @@
 {
-    "$schema": "https://developer.microsoft.com/en-us/json-schemas/teams/v1.16/MicrosoftTeams.schema.json",
-    "manifestVersion": "1.16",
-    "version": "1.0.0",
-    "id": "${{TEAMS_APP_ID}}",
-    "packageName": "com.microsoft.teams.extension",
-    "developer": {
-        "name": "Teams App, Inc.",
-        "websiteUrl": "${{TAB_ENDPOINT}}",
-        "privacyUrl": "${{TAB_ENDPOINT}}/index.html#/privacy",
-        "termsOfUseUrl": "${{TAB_ENDPOINT}}/index.html#/termsofuse"
+  "$schema": "https://developer.microsoft.com/en-us/json-schemas/teams/v1.16/MicrosoftTeams.schema.json",
+  "manifestVersion": "1.16",
+  "version": "1.0.0",
+  "id": "${{TEAMS_APP_ID}}",
+  "packageName": "com.microsoft.teams.extension",
+  "developer": {
+    "name": "Teams App, Inc.",
+    "websiteUrl": "${{TAB_ENDPOINT}}",
+    "privacyUrl": "${{TAB_ENDPOINT}}/index.html#/privacy",
+    "termsOfUseUrl": "${{TAB_ENDPOINT}}/index.html#/termsofuse"
+  },
+  "icons": {
+    "color": "color.png",
+    "outline": "outline.png"
+  },
+  "name": {
+    "short": "AE_M365_APP-${{TEAMSFX_ENV}}",
+    "full": "Full name for AE_M365_APP"
+  },
+  "description": {
+    "short": "Short description of AE_M365_APP",
+    "full": "Full description of AE_M365_APP"
+  },
+  "accentColor": "#FFFFFF",
+  "bots": [],
+  "composeExtensions": [],
+  "configurableTabs": [],
+  "staticTabs": [
+    {
+      "entityId": "index0",
+      "name": "Personal Tab",
+      "contentUrl": "${{TAB_ENDPOINT}}/index.html#/tab",
+      "websiteUrl": "${{TAB_ENDPOINT}}/index.html#/tab",
+      "scopes": ["personal"]
     },
-    "icons": {
-        "color": "color.png",
-        "outline": "outline.png"
-    },
-    "name": {
-        "short": "AE_M365_APP-${{TEAMSFX_ENV}}",
-        "full": "Full name for AE_M365_APP"
-    },
-    "description": {
-        "short": "Short description of AE_M365_APP",
-        "full": "Full description of AE_M365_APP"
-    },
-    "accentColor": "#FFFFFF",
-    "bots": [],
-    "composeExtensions": [],
-    "configurableTabs": [],
-    "staticTabs": [
-        {
-            "entityId": "index0",
-            "name": "Personal Tab",
-            "contentUrl": "${{TAB_ENDPOINT}}/index.html#/tab",
-            "websiteUrl": "${{TAB_ENDPOINT}}/index.html#/tab",
-            "scopes": [
-                "personal"
-            ]
-        },
-        {
-            "entityId": "index1",
-            "name": "A Second Tab",
-            "contentUrl": "${{TAB_ENDPOINT}}/index.html#/tab",
-            "websiteUrl": "${{TAB_ENDPOINT}}/index.html#/tab",
-            "scopes": [
-                "personal"
-            ]
-        }
-    ],
-    "permissions": [
-        "identity",
-        "messageTeamMembers"
-    ],
-    "validDomains": [
-        "${{TAB_DOMAIN}}",
-        "localhost:53000",
-        "m365tab962ca2.z5.web.core.windows.net"        
-    ],
-    "webApplicationInfo": {
-        "id": "${{AAD_APP_CLIENT_ID}}",
-        "resource": "api://${{TAB_DOMAIN}}/${{AAD_APP_CLIENT_ID}}"
-    },
-    "showLoadingIndicator": false
+    {
+      "entityId": "index1",
+      "name": "A Second Tab",
+      "contentUrl": "${{TAB_ENDPOINT}}/index.html#/tab",
+      "websiteUrl": "${{TAB_ENDPOINT}}/index.html#/tab",
+      "scopes": ["personal"]
+    }
+  ],
+  "permissions": ["identity", "messageTeamMembers"],
+  "devicePermissions": ["geolocation"],
+  "validDomains": ["${{TAB_DOMAIN}}", "localhost:53000", "m365tab962ca2.z5.web.core.windows.net"],
+  "webApplicationInfo": {
+    "id": "${{AAD_APP_CLIENT_ID}}",
+    "resource": "api://${{TAB_DOMAIN}}/${{AAD_APP_CLIENT_ID}}"
+  },
+  "showLoadingIndicator": false
 }

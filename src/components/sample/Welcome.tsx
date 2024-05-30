@@ -49,6 +49,22 @@ function onGetLocation() {
   );
 }
 
+async function onGetGeoLocation() {
+  console.log("Checking for geolocation permission");
+  if (!(await geoLocation.hasPermission())) {
+    console.log("Requesting geolocation permission");
+    const permissionRequestResult = await geoLocation.requestPermission();
+    if (!permissionRequestResult) {
+      console.log("Geolocation permission request failed");
+      return;
+    }
+  }
+
+  console.log("Getting the location");
+  const location = await geoLocation.getCurrentLocation();
+  console.log(`Got the location: ${JSON.stringify(location)}`);
+}
+
 async function onGetAuthToken() {
   try {
     const theToken = await authentication.getAuthToken();
@@ -352,7 +368,8 @@ export function Welcome(props: { showFunction?: boolean; environment?: string })
   const geoLocationSupported: boolean | undefined =
     initResult?.context === undefined ? undefined : geoLocation.isSupported();
   const peopleSupported: boolean | undefined = initResult?.context === undefined ? undefined : people.isSupported();
-  const isWebStorageClearedOnUserLogOut: boolean | undefined = initResult?.context === undefined ? undefined : webStorage.isWebStorageClearedOnUserLogOut();
+  const isWebStorageClearedOnUserLogOut: boolean | undefined =
+    initResult?.context === undefined ? undefined : webStorage.isWebStorageClearedOnUserLogOut();
 
   return (
     <div className="welcome page">
@@ -378,9 +395,7 @@ export function Welcome(props: { showFunction?: boolean; environment?: string })
         <p className="center">Geolocation is supported: {geoLocationSupported ? "true" : "false"}</p>
         <p className="center">People is supported: {peopleSupported ? "true" : "false"}</p>
         <p className="center">Is Web Storage Cleared on Logout? {isWebStorageClearedOnUserLogOut ? "true" : "false"}</p>
-        {pageId && (
-          <p className="center">The page id is {pageId}</p>
-        )}
+        {pageId && <p className="center">The page id is {pageId}</p>}
         <p className="center">The context frame context is {frameContext}</p>
         <p className="center">The app frame context is {appFrameContext}</p>
         <p className="center">The page id is "{pageId}"</p>
@@ -406,6 +421,7 @@ export function Welcome(props: { showFunction?: boolean; environment?: string })
         <button onClick={onGetAuthToken}>Get auth token</button>
         <button onClick={onShareDeepLinkbutton}>Share a deep link</button>
         <button onClick={onGetLocation}>Get Location</button>
+        <button onClick={onGetGeoLocation}>Get GeoLocation</button>
         <button onClick={onLinkToSecondTab}>Link to Second Tab</button>
         <button onClick={writeToLocalStorage}>Write to Local Storage</button>
         <button onClick={readFromLocalStorage}>Read from Local Storage</button>
