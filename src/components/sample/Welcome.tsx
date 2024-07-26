@@ -65,6 +65,16 @@ async function onGetGeoLocation() {
   console.log(`Got the location: ${JSON.stringify(location)}`);
 }
 
+async function onGetUser() {
+  console.log(`Calling authentication.getUser()`);
+  try {
+    await authentication.getUser();
+  } catch (error) {
+    console.log(`Error getting user: ${error}`);
+    console.log(`Error getting user (as string): ${JSON.stringify(error)}`);
+  }
+}
+
 async function onGetAuthToken() {
   try {
     const theToken = await authentication.getAuthToken();
@@ -422,6 +432,7 @@ export function Welcome(props: { showFunction?: boolean; environment?: string })
         <button onClick={onShareDeepLinkbutton}>Share a deep link</button>
         <button onClick={onGetLocation}>Get Location</button>
         <button onClick={onGetGeoLocation}>Get GeoLocation</button>
+        <button onClick={onGetUser}>getUser</button>
         <button onClick={onLinkToSecondTab}>Link to Second Tab</button>
         <button onClick={writeToLocalStorage}>Write to Local Storage</button>
         <button onClick={readFromLocalStorage}>Read from Local Storage</button>
