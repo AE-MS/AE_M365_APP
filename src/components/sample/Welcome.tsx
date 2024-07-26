@@ -18,7 +18,6 @@ import {
   tasks,
   people,
   version,
-  webStorage,
 } from "@microsoft/teams-js";
 import { AzureFunctions } from "./AzureFunctions";
 import { Graph } from "./Graph";
@@ -378,8 +377,6 @@ export function Welcome(props: { showFunction?: boolean; environment?: string })
   const geoLocationSupported: boolean | undefined =
     initResult?.context === undefined ? undefined : geoLocation.isSupported();
   const peopleSupported: boolean | undefined = initResult?.context === undefined ? undefined : people.isSupported();
-  const isWebStorageClearedOnUserLogOut: boolean | undefined =
-    initResult?.context === undefined ? undefined : webStorage.isWebStorageClearedOnUserLogOut();
 
   return (
     <div className="welcome page">
@@ -393,18 +390,17 @@ export function Welcome(props: { showFunction?: boolean; environment?: string })
         )}
         <p className="center">Your app is running in your {friendlyEnvironmentName}</p>
         <p className="center">TeamsJS version: {version}</p>
-        <p className="center">
-          <div id="legacyContextHostType">Legacy context host type: Not Retrieved Yet</div>
-        </p>
-        <p className="center">
-          <div id="currentContextHostType">Current context host type: {initResult?.context?.app.host.clientType}</div>
-        </p>
+        <div className="center" id="legacyContextHostType">
+          Legacy context host type: Not Retrieved Yet
+        </div>
+        <div className="center" id="currentContextHostType">
+          Current context host type: {initResult?.context?.app.host.clientType}
+        </div>
         <p className="center">Card Dialogs is supported: {cardDialogsIsSupported ? "true" : "false"}</p>
         <p className="center">Location is supported: {locationSupported ? "true" : "false"}</p>
         <p className="center">Pages.tabs is supported: {pagesTabsSupported ? "true" : "false"}</p>
         <p className="center">Geolocation is supported: {geoLocationSupported ? "true" : "false"}</p>
         <p className="center">People is supported: {peopleSupported ? "true" : "false"}</p>
-        <p className="center">Is Web Storage Cleared on Logout? {isWebStorageClearedOnUserLogOut ? "true" : "false"}</p>
         {pageId && <p className="center">The page id is {pageId}</p>}
         <p className="center">The context frame context is {frameContext}</p>
         <p className="center">The app frame context is {appFrameContext}</p>
