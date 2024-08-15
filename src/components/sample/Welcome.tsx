@@ -18,6 +18,7 @@ import {
   tasks,
   people,
   version,
+  webStorage,
 } from "@microsoft/teams-js";
 import { AzureFunctions } from "./AzureFunctions";
 import { Graph } from "./Graph";
@@ -141,6 +142,12 @@ function startSingleUserChat() {
 
 function startGroupChat() {
   chat.openGroupChat({ users: ["trharris@microsoft.com", "erinha@microsoft.com"] });
+}
+
+async function checkIfWebStorageIsClearedOnLogout() {
+  alert(`Starting check`);
+  alert(`Is web storage cleared on logout: ${await webStorage.isWebStorageClearedOnUserLogOut()}`);
+  alert(`Check complete`);
 }
 
 function startAuthenticate() {
@@ -377,6 +384,8 @@ export function Welcome(props: { showFunction?: boolean; environment?: string })
   const geoLocationSupported: boolean | undefined =
     initResult?.context === undefined ? undefined : geoLocation.isSupported();
   const peopleSupported: boolean | undefined = initResult?.context === undefined ? undefined : people.isSupported();
+  const webStorageSupported: boolean | undefined =
+    initResult?.context === undefined ? undefined : webStorage.isSupported();
 
   return (
     <div className="welcome page">
@@ -401,6 +410,7 @@ export function Welcome(props: { showFunction?: boolean; environment?: string })
         <p className="center">Pages.tabs is supported: {pagesTabsSupported ? "true" : "false"}</p>
         <p className="center">Geolocation is supported: {geoLocationSupported ? "true" : "false"}</p>
         <p className="center">People is supported: {peopleSupported ? "true" : "false"}</p>
+        <p className="center">WebStorage is supported: {webStorageSupported ? "true" : "false"}</p>
         {pageId && <p className="center">The page id is {pageId}</p>}
         <p className="center">The context frame context is {frameContext}</p>
         <p className="center">The app frame context is {appFrameContext}</p>
@@ -435,6 +445,7 @@ export function Welcome(props: { showFunction?: boolean; environment?: string })
         <button onClick={selectPeople}>Select People</button>
         <button onClick={startSingleUserChat}>Start Single User Chat</button>
         <button onClick={startGroupChat}>Start Group User Chat</button>
+        <button onClick={checkIfWebStorageIsClearedOnLogout}>Check if Web Storage is Cleared on Logout</button>
         <button onClick={navigateToSecondPage}>Navigate to second page</button>
         <button
           onClick={() => (window.location.href = "https://m365tab962ca2.z5.web.core.windows.net/index.html#/tab")}
