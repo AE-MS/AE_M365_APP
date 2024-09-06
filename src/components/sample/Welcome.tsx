@@ -164,6 +164,10 @@ function startOpenLink() {
   });
 }
 
+function openCalendarDeepLink() {
+  app.openLink("https://teams.cloud.microsoft/l/meeting/new?subject=test");
+}
+
 const adaptiveCardJson = {
   type: "AdaptiveCard",
   body: [
@@ -455,6 +459,7 @@ export function Welcome(props: { showFunction?: boolean; environment?: string })
         <button onClick={() => (window.location.href = "https://example2.com:53000/")}>Navigate to Example 2</button>
         <button onClick={startAuthenticate}>Authenticate</button>
         <button onClick={startOpenLink}>Execute app.openLink</button>
+        <button onClick={openCalendarDeepLink}>Open Calendar Deeplink</button>
         <button onClick={() => window.open("https://www.bing.com/")}>Open Bing in new window</button>
         <br></br>
         <a href="https://www.bing.com/" target="_blank" rel="noreferrer">
