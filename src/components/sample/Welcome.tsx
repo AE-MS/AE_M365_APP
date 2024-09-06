@@ -19,6 +19,7 @@ import {
   people,
   version,
   webStorage,
+  calendar,
 } from "@microsoft/teams-js";
 import { AzureFunctions } from "./AzureFunctions";
 import { Graph } from "./Graph";
@@ -29,7 +30,14 @@ import { Publish } from "./Publish";
 import { TeamsFxContext } from "../Context";
 
 function callInitialize() {
-  app.initialize();
+  app
+    .initialize()
+    .then(() => {
+      console.log("initialize complete");
+    })
+    .catch((error) => {
+      console.log(`initialize error: ${error}`);
+    });
 }
 
 function onShareDeepLinkbutton() {
@@ -148,6 +156,10 @@ async function checkIfWebStorageIsClearedOnLogout() {
   alert(`Starting check`);
   alert(`Is web storage cleared on logout: ${await webStorage.isWebStorageClearedOnUserLogOut()}`);
   alert(`Check complete`);
+}
+
+function createMeeting() {
+  calendar.composeMeeting({ subject: "test meeting" });
 }
 
 function startAuthenticate() {
@@ -450,6 +462,7 @@ export function Welcome(props: { showFunction?: boolean; environment?: string })
         <button onClick={startSingleUserChat}>Start Single User Chat</button>
         <button onClick={startGroupChat}>Start Group User Chat</button>
         <button onClick={checkIfWebStorageIsClearedOnLogout}>Check if Web Storage is Cleared on Logout</button>
+        <button onClick={createMeeting}>Create Meeting</button>
         <button onClick={navigateToSecondPage}>Navigate to second page</button>
         <button
           onClick={() => (window.location.href = "https://m365tab962ca2.z5.web.core.windows.net/index.html#/tab")}
